@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Como Nossos Clientes Nos Conheceram</title>
+    <title>Como Nossos Clientes Nos Conheceram - Kihap Martial Arts</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Atualizando para o CDN mais estável do Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         :root {
-            --gradient-primary: linear-gradient(135deg, #6B46C1 0%, #4834D4 100%);
+            --cor-primaria: #2D3748;
+            --cor-secundaria: #4A5568;
             --cor-fundo: #F7FAFC;
-            --cor-texto-titulo: #2D3748;
-            --cor-texto-dados: #4A5568;
+            --cor-texto: #1A202C;
             --cor-fundo-grafico: #FFFFFF;
             --sombra-suave: 0 10px 25px rgba(0, 0, 0, 0.05);
             --sombra-hover: 0 12px 30px rgba(0, 0, 0, 0.1);
@@ -22,7 +21,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             background-color: var(--cor-fundo);
-            color: var(--cor-texto-dados);
+            color: var(--cor-texto);
             padding: 20px;
             min-height: 100vh;
             box-sizing: border-box;
@@ -36,11 +35,33 @@
         .header {
             text-align: center;
             margin-bottom: 40px;
-            padding: 20px;
-            background: var(--gradient-primary);
+            padding: 30px;
+            background: var(--cor-primaria);
             border-radius: 20px;
             color: white;
             box-shadow: var(--sombra-suave);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            max-height: 60px;
+            width: auto;
         }
 
         h1 {
@@ -88,7 +109,7 @@
         .data-table th {
             background: #F8F9FD;
             font-weight: 600;
-            color: var(--cor-texto-titulo);
+            color: var(--cor-texto);
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -125,6 +146,9 @@
 <body>
     <div class="container">
         <div class="header">
+            <div class="logo-container">
+                <!-- Logo será adicionado quando disponível -->
+            </div>
             <h1>Como Nossos Clientes Nos Conheceram</h1>
         </div>
         
@@ -161,19 +185,18 @@
         window.onload = function() {
             const ctx = document.getElementById('myChart');
             
-            // Definindo cores vibrantes para o gráfico
             const colors = [
-                {start: '#FF6B6B', end: '#FF8787'},
-                {start: '#4834D4', end: '#686DE0'},
-                {start: '#20BF6B', end: '#26DE81'},
-                {start: '#FA8231', end: '#FD9644'},
-                {start: '#8854D0', end: '#A55EEA'},
-                {start: '#2D98DA', end: '#45AAF2'},
-                {start: '#3867D6', end: '#4B7BEC'},
-                {start: '#EB3B5A', end: '#FC5C65'},
-                {start: '#6AB04C', end: '#BADC58'},
-                {start: '#F7B731', end: '#FED330'},
-                {start: '#4834D4', end: '#686DE0'}
+                {start: '#4A5568', end: '#2D3748'},  // Tons de cinza
+                {start: '#3182CE', end: '#2C5282'},  // Tons de azul
+                {start: '#38A169', end: '#276749'},  // Tons de verde
+                {start: '#D69E2E', end: '#975A16'},  // Tons de dourado
+                {start: '#63B3ED', end: '#3182CE'},  // Azul claro
+                {start: '#48BB78', end: '#38A169'},  // Verde claro
+                {start: '#4A5568', end: '#2D3748'},  // Cinza
+                {start: '#3182CE', end: '#2C5282'},  // Azul
+                {start: '#38A169', end: '#276749'},  // Verde
+                {start: '#D69E2E', end: '#975A16'},  // Dourado
+                {start: '#63B3ED', end: '#3182CE'}   // Azul claro
             ];
 
             const data = {
@@ -239,7 +262,6 @@
 
             const myChart = new Chart(ctx, config);
 
-            // Função para atualizar orientação do gráfico
             function updateChartOrientation() {
                 const newOrientation = window.innerWidth < 768 ? 'y' : 'x';
                 if (myChart.options.indexAxis !== newOrientation) {
@@ -248,7 +270,6 @@
                 }
             }
 
-            // Listener para redimensionamento da janela
             let resizeTimeout;
             window.addEventListener('resize', function() {
                 clearTimeout(resizeTimeout);
