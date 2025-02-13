@@ -1,198 +1,260 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Gráfico de Como Conheceu</title>
+    <title>Como Nossos Clientes Nos Conheceram</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Atualizando para o CDN mais estável do Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .chart-container {
-            width: 80%;
-            max-width: 800px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        :root {
+            --gradient-primary: linear-gradient(135deg, #6B46C1 0%, #4834D4 100%);
+            --cor-fundo: #F7FAFC;
+            --cor-texto-titulo: #2D3748;
+            --cor-texto-dados: #4A5568;
+            --cor-fundo-grafico: #FFFFFF;
+            --sombra-suave: 0 10px 25px rgba(0, 0, 0, 0.05);
+            --sombra-hover: 0 12px 30px rgba(0, 0, 0, 0.1);
         }
 
-        @media (max-width: 768px) {
-            .chart-container {
-                width: 95%;
-                padding: 10px;
-            }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto-dados);
+            padding: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            color: white;
+            box-shadow: var(--sombra-suave);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .chart-wrapper {
+            background: var(--cor-fundo-grafico);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--sombra-suave);
+            transition: box-shadow 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .chart-wrapper:hover {
+            box-shadow: var(--sombra-hover);
+        }
+
+        .chart-container {
+            height: 400px;
+            position: relative;
+        }
+
+        .data-table {
+            width: 100%;
+            background: var(--cor-fundo-grafico);
+            border-radius: 20px;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            box-shadow: var(--sombra-suave);
+            margin-top: 30px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 16px 24px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: #F8F9FD;
+            font-weight: 600;
+            color: var(--cor-texto-titulo);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table td {
+            border-top: 1px solid #EDF2F7;
+            font-size: 0.95rem;
+        }
+
+        .data-table tr:hover td {
+            background-color: #F8F9FD;
+        }
+
+        @media (min-width: 768px) {
             body {
-                font-size: 14px; /* Reduzir o tamanho da fonte em telas menores */
+                padding: 40px;
             }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .chart-wrapper {
+                padding: 32px;
+            }
+
             .chart-container {
-                padding: 15px; /* Aumentar um pouco o padding interno no mobile */
-                margin: 10px; /* Adicionar margem ao redor do container do gráfico no mobile */
+                height: 500px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="chart-container">
-        <canvas id="myChart"></canvas>
+    <div class="container">
+        <div class="header">
+            <h1>Como Nossos Clientes Nos Conheceram</h1>
+        </div>
+        
+        <div class="chart-wrapper">
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Fonte</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Internet</td><td>30</td></tr>
+                <tr><td>Indicação</td><td>30</td></tr>
+                <tr><td>Fachada</td><td>20</td></tr>
+                <tr><td>Totem/Site</td><td>20</td></tr>
+                <tr><td>Campanha</td><td>9</td></tr>
+                <tr><td>Facebook/Instagram</td><td>8</td></tr>
+                <tr><td>Nenhum</td><td>7</td></tr>
+                <tr><td>Família</td><td>6</td></tr>
+                <tr><td>Panfleto</td><td>3</td></tr>
+                <tr><td>Google</td><td>1</td></tr>
+                <tr><td>Convite</td><td>1</td></tr>
+            </tbody>
+        </table>
     </div>
 
     <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['INTERNET', 'INDICAÇÃO', 'NENHUM', 'FACHADA', 'FAMÍLIA', 'FACEBOOK/INSTAGRAM', 'GOOGLE', 'CONVITE', 'TOTEM/SITE', 'PANFLETO', 'CAMPANHA'],
-                datasets: [{
-                    label: 'Quantidade',
-                    data: [30, 30, 7, 20, 6, 8, 1, 1, 20, 3, 9],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
-                        'rgba(75, 192, 192, 0.7)',
-                        'rgba(153, 102, 255, 0.7)',
-                        'rgba(255, 159, 64, 0.7)',
-                        'rgba(199, 199, 199, 0.7)',
-                        'rgba(100, 200, 50, 0.7)',
-                        'rgba(150, 50, 100, 0.7)',
-                        'rgba(200, 100, 200, 0.7)',
-                        'rgba(50, 150, 250, 0.7)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(199, 199, 199, 1)',
-                        'rgba(100, 200, 50, 1)',
-                        'rgba(150, 50, 100, 1)',
-                        'rgba(200, 100, 200, 1)',
-                        'rgba(50, 150, 250, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Quantidade'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Como conheceu'
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false // Oculta a legenda
-                    },
-                    title: {
-                        display: true,
-                        text: 'Como Nossos Clientes Nos Conheceram',
-                        padding: {
-                            top: 10,
-                            bottom: 30
-                        }
-                    }
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: {
-                padding: {
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                    bottom: 20
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Quantidade',
-                        font: {
-                            size: 12
-                        }
-                    },
-                    ticks: {
-                        font: {
-                            size: 10
-                        }
-                    }
+        window.onload = function() {
+            const ctx = document.getElementById('myChart');
+            
+            // Definindo cores vibrantes para o gráfico
+            const colors = [
+                {start: '#FF6B6B', end: '#FF8787'},
+                {start: '#4834D4', end: '#686DE0'},
+                {start: '#20BF6B', end: '#26DE81'},
+                {start: '#FA8231', end: '#FD9644'},
+                {start: '#8854D0', end: '#A55EEA'},
+                {start: '#2D98DA', end: '#45AAF2'},
+                {start: '#3867D6', end: '#4B7BEC'},
+                {start: '#EB3B5A', end: '#FC5C65'},
+                {start: '#6AB04C', end: '#BADC58'},
+                {start: '#F7B731', end: '#FED330'},
+                {start: '#4834D4', end: '#686DE0'}
+            ];
 
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Como conheceu',
-                        font: {
-                            size: 12
+            const data = {
+                labels: ['Internet', 'Indicação', 'Fachada', 'Totem/Site', 'Campanha', 
+                        'Facebook/Instagram', 'Nenhum', 'Família', 'Panfleto', 'Google', 'Convite'],
+                datasets: [{
+                    data: [30, 30, 20, 20, 9, 8, 7, 6, 3, 1, 1],
+                    backgroundColor: colors.map(color => color.start),
+                    borderRadius: 6,
+                    borderSkipped: false,
+                    barThickness: 'flex',
+                    maxBarThickness: 40
+                }]
+            };
+
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: window.innerWidth < 768 ? 'y' : 'x',
+                    plugins: {
+                        legend: {
+                            display: false
                         }
                     },
-                    ticks: {
-                        autoSkip: false,
-                        maxRotation: 45,
-                        minRotation: 45,
-                        font: {
-                            size: 10
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true,
+                                color: '#EDF2F7',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: "'Poppins', sans-serif",
+                                    size: window.innerWidth < 768 ? 11 : 12
+                                },
+                                color: '#718096'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: "'Poppins', sans-serif",
+                                    size: window.innerWidth < 768 ? 11 : 12
+                                },
+                                color: '#718096'
+                            }
                         }
-                    }
-                }
-            },
-             plugins: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: 'Como Nossos Clientes Nos Conheceram',
-                    padding: {
-                        top: 10,
-                        bottom: 30
                     },
-                    font: {
-                        size: 16
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
                     }
                 }
-            },
-            defaults: {
-                font: {
-                    size: 12
-                }
-            },
-            onResize: function(chart, size) {
-                if (size.width < 768) {
-                    chart.options.plugins.title.font.size = 14;
-                    chart.defaults.font.size = 10;
-                    chart.options.scales.x.ticks.font.size = 8;
-                    chart.options.scales.y.title.font.size = 10;
-                    chart.options.scales.x.title.font.size = 10;
-                } else {
-                    chart.options.plugins.title.font.size = 16;
-                    chart.defaults.font.size = 12;
-                    chart.options.scales.x.ticks.font.size = 10;
-                    chart.options.scales.y.title.font.size = 12;
-                    chart.options.scales.x.title.font.size = 12;
+            };
+
+            const myChart = new Chart(ctx, config);
+
+            // Função para atualizar orientação do gráfico
+            function updateChartOrientation() {
+                const newOrientation = window.innerWidth < 768 ? 'y' : 'x';
+                if (myChart.options.indexAxis !== newOrientation) {
+                    myChart.options.indexAxis = newOrientation;
+                    myChart.update();
                 }
             }
-        });
+
+            // Listener para redimensionamento da janela
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(updateChartOrientation, 250);
+            });
+        };
     </script>
 </body>
 </html>
