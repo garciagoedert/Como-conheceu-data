@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfico de Como Conheceu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                width: 95%;
+                padding: 10px;
+            }
+            body {
+                font-size: 14px; /* Reduzir o tamanho da fonte em telas menores */
+            }
+            .chart-container {
+                padding: 15px; /* Aumentar um pouco o padding interno no mobile */
+                margin: 10px; /* Adicionar margem ao redor do container do gráfico no mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['INTERNET', 'INDICAÇÃO', 'NENHUM', 'FACHADA', 'FAMÍLIA', 'FACEBOOK/INSTAGRAM', 'GOOGLE', 'CONVITE', 'TOTEM/SITE', 'PANFLETO', 'CAMPANHA'],
+                datasets: [{
+                    label: 'Quantidade',
+                    data: [30, 30, 7, 20, 6, 8, 1, 1, 20, 3, 9],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 159, 64, 0.7)',
+                        'rgba(199, 199, 199, 0.7)',
+                        'rgba(100, 200, 50, 0.7)',
+                        'rgba(150, 50, 100, 0.7)',
+                        'rgba(200, 100, 200, 0.7)',
+                        'rgba(50, 150, 250, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(199, 199, 199, 1)',
+                        'rgba(100, 200, 50, 1)',
+                        'rgba(150, 50, 100, 1)',
+                        'rgba(200, 100, 200, 1)',
+                        'rgba(50, 150, 250, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Quantidade'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Como conheceu'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Oculta a legenda
+                    },
+                    title: {
+                        display: true,
+                        text: 'Como Nossos Clientes Nos Conheceram',
+                        padding: {
+                            top: 10,
+                            bottom: 30
+                        }
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    left: 20,
+                    right: 20,
+                    top: 20,
+                    bottom: 20
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantidade',
+                        font: {
+                            size: 12
+                        }
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        }
+                    }
+
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Como conheceu',
+                        font: {
+                            size: 12
+                        }
+                    },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: 45,
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
+            },
+             plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Como Nossos Clientes Nos Conheceram',
+                    padding: {
+                        top: 10,
+                        bottom: 30
+                    },
+                    font: {
+                        size: 16
+                    }
+                }
+            },
+            defaults: {
+                font: {
+                    size: 12
+                }
+            },
+            onResize: function(chart, size) {
+                if (size.width < 768) {
+                    chart.options.plugins.title.font.size = 14;
+                    chart.defaults.font.size = 10;
+                    chart.options.scales.x.ticks.font.size = 8;
+                    chart.options.scales.y.title.font.size = 10;
+                    chart.options.scales.x.title.font.size = 10;
+                } else {
+                    chart.options.plugins.title.font.size = 16;
+                    chart.defaults.font.size = 12;
+                    chart.options.scales.x.ticks.font.size = 10;
+                    chart.options.scales.y.title.font.size = 12;
+                    chart.options.scales.x.title.font.size = 12;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
